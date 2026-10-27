@@ -14,6 +14,13 @@ app.use(cors({ origin: env.clientOrigins, credentials: true }));
 app.use(express.json({ limit: '100kb' }));
 if (env.nodeEnv !== 'test') app.use(morgan(env.nodeEnv === 'production' ? 'combined' : 'dev'));
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "BookLeaf Backend API is running",
+  });
+});
+
 app.get('/api/health', (req, res) =>
   res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'up' : 'down', ai: env.ai.enabled ? 'configured' : 'disabled (fallback mode)' }));
 
