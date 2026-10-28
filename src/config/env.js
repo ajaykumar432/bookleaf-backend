@@ -21,7 +21,10 @@ export const env = Object.freeze({
   mongoUri: need('MONGODB_URI'),
   jwtSecret: need('JWT_SECRET'),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  clientOrigins: (process.env.CLIENT_URL || 'https://bookleaf-frontend-2wwm.vercel.app/').split(',').map((s) => s.trim()),
+  clientOrigins: (process.env.CLIENT_URL || 'http://localhost:5173,https://bookleaf-frontend-2wwm.vercel.app')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/$/, ''))
+    .filter(Boolean),
   referenceDate: process.env.REFERENCE_DATE || null,
   ai: Object.freeze({
     provider,
